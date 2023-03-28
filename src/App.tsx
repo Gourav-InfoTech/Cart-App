@@ -1,58 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "./store/slices/productSlice";
+import Cart from "./components/Cart";
+import styled from "styled-components";
+import ProductCard from "./components/ProductCard";
 
 function App() {
+  const { products } = useSelector((state: any) => state.products);
+  const dispatch = useDispatch<any>();
+
+  console.log(products);
+
+  useEffect(() => {
+    dispatch(getData());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <ProductsDiv className="products gap-4">
+        {products.map((el: any, indx: number) => {
+          return <ProductCard key={indx + "ded"} el={el} />;
+        })}
+      </ProductsDiv>
+      <Cart />
+    </>
   );
 }
 
 export default App;
+
+const ProductsDiv = styled.div`
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+
+  @media (max-width: 1100px) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @media (max-width: 768px) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 600px) {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+   
+`;
