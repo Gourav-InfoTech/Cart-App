@@ -8,6 +8,7 @@ import {
 } from "../store/slices/cartSlice";
 import { TiPlusOutline, TiMinusOutline } from "react-icons/ti";
 import { MdDeleteOutline } from "react-icons/md";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 interface cartItem {
   image: string;
@@ -74,7 +75,7 @@ const Cart = () => {
                 <p>{quantity}</p>
                 <button onClick={() => IncreaseIt(id)}> <TiPlusOutline /> </button>
               </div>
-              <button
+              <button className="deleteBtn"
                 onClick={() => {
                   deleteIt(id);
                 }}
@@ -86,6 +87,8 @@ const Cart = () => {
           </div>
         );
       })}
+
+      <button className="checkout flex items-center gap-3"> <IoBagCheckOutline />Checkout</button>
     </CartDiv>
   );
 };
@@ -95,6 +98,7 @@ export default Cart;
 const CartDiv = styled.div`
   width: 80vw;
   margin: auto;
+  margin-bottom:10px;
 
   .cardInnerDiv {
     padding: 10px 20px;
@@ -111,7 +115,7 @@ const CartDiv = styled.div`
     }
   }
 
-  button {
+  .deleteBtn {
     display: flex;
     align-items:center;
     gap: 10px;
@@ -138,6 +142,8 @@ const CartDiv = styled.div`
     }
     
     button{
+      padding: 2px 5px;
+      border-radius: 5px;
       background-color: #D6DBDF;
       color: #666666;
       border: none;
@@ -151,6 +157,17 @@ const CartDiv = styled.div`
         transition: all 0.1s linear;
       }
     }
+  }
+
+  .checkout{
+    margin-left:auto;
+    margin-top: 10px;
+    font-family: Quicksand;
+    font-weight: bold;
+    background-color: #9575cd;
+    color: white;
+    border-radius: 7px;
+    padding: 5px 15px;
   }
 `;
 
