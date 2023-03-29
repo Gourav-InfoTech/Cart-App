@@ -10,7 +10,7 @@ const Footer = () => {
     <FooterDiv>
         <div className='main flex justify-evenly items-center'>
             <div className="logo w-[160px]">
-                <img src="/cartit.png" alt="logo" />
+                <img src="/Cartit.png" alt="logo" />
             </div>
             <div className="rights">
                 <p>
