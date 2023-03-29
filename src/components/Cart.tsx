@@ -30,7 +30,7 @@ const Cart = () => {
 
   const isVisible: any = showCart ? "block" : "none";
   const opacity = showCart ? 1 : 0;
-  const right = showCart ? "0" : "-950px";
+  const right = showCart ? "0" : "-1000px";
   document.body.style.overflow = showCart ? "hidden" : "auto";
 
 
@@ -114,16 +114,13 @@ const CartDiv = styled.div<CartDivD>`
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   padding: 40px;
-  backdrop-filter: blur(200px);
+  background-color: #EEF1FF;
   position: fixed;
   right: ${({ right }) => right};;
   width: 50vw;
   margin-bottom:10px;
-  transition: opacity 1s ease-in-out, right .6s ease-in-out;
-
-  /* visibility: ${({ visible }) => visible}; */
-  /* transform: ${({ translate }) => translate}; */
-  /* opacity: ${({ opacity }) => opacity}; */
+  transition: opacity .5s linear, right .8s ease-in-out;
+  opacity: ${({ opacity }) => opacity};
 
 
   .cardInnerDiv {
@@ -133,12 +130,13 @@ const CartDiv = styled.div<CartDivD>`
   .item_info {
     & .image{
       width: 100px;
+      
+      .item{
+        width: 300px;
+        max-width: 300px;
+      }
     }
 
-    .item{
-      width: 300px;
-      max-width: 300px;
-    }
   }
 
   .emptyCart{
