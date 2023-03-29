@@ -6,6 +6,7 @@ import Cart from "./components/Cart";
 import styled from "styled-components";
 import ProductCard from "./components/ProductCard";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   const [isCart, setIsCart] = useState(false);
@@ -27,6 +28,7 @@ function App() {
         </ProductsDiv>
         <Cart />
       </div>
+      <Footer />
     </>
   );
 }

@@ -25,7 +25,7 @@ interface CartDivD {
 }
 
 const Cart = () => {
-  const { cart,showCart } = useSelector((state: any) => state.cart);
+  const { cart, showCart } = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
 
   const isVisible: any = showCart ? "block" : "none";
@@ -72,28 +72,30 @@ const Cart = () => {
         const { image, price, title, id, quantity } = el;
         return (
           <div className="cardInnerDiv" key={indx}>
-            <div className="item_info flex justify-between items-center">
-              <div className="image">
-                <img src={image} alt="" />
+            <div className="item_info flex items-start gap-2">
+              <div className="image flex items-center">
+                <img src={image} alt="image" />
               </div>
-              <div className="item flex ">
-                <h1>{title}</h1>
-              </div>
-              <p>${price}</p>
 
-              <div className="quantity flex">
-                <button onClick={() => DecreaseIt(id)}> <TiMinusOutline /></button>
-                <p>{quantity}</p>
-                <button onClick={() => IncreaseIt(id)}> <TiPlusOutline /> </button>
+              <div className="cartItemButtons flex flex-1 items-center justify-between ">
+                <div className="title max-w-[150px]">
+                  <h1 className="flex-1">{title}</h1>
+                </div>
+                <p>${price}</p>
+                <div className="quantity flex">
+                  <button onClick={() => DecreaseIt(id)}> <TiMinusOutline /></button>
+                  <p>{quantity}</p>
+                  <button onClick={() => IncreaseIt(id)}> <TiPlusOutline /> </button>
+                </div>
+                <button className="deleteBtn"
+                  onClick={() => {
+                    deleteIt(id);
+                  }}
+                >
+                  <MdDeleteOutline />
+                  Remove
+                </button>
               </div>
-              <button className="deleteBtn"
-                onClick={() => {
-                  deleteIt(id);
-                }}
-              >
-                <MdDeleteOutline />
-                Remove
-              </button>
             </div>
           </div>
         );
@@ -128,13 +130,9 @@ const CartDiv = styled.div<CartDivD>`
   }
 
   .item_info {
-    & .image{
-      width: 100px;
-      
-      .item{
-        width: 300px;
-        max-width: 300px;
-      }
+    & .image img{
+      width: 60px;
+      margin-right: 10px;
     }
 
   }
@@ -198,9 +196,33 @@ const CartDiv = styled.div<CartDivD>`
     padding: 5px 15px;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 820px){
     padding: 10px;
     width: 100vw;
+
+    .cardInnerDiv{
+      margin-bottom: 20px;
+    }
+
+    .item_info{
+      justify-content: center;
+    }
+
+    
+    .cartItemButtons{
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 10px;
+      flex:0;
+
+      .title h1{
+        width: 200px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      
+    }
 
   }
 `;
