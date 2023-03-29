@@ -3,6 +3,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
+    showCart: false
   },
   reducers: {
 
@@ -38,9 +39,18 @@ const cartSlice = createSlice({
     removeFromCart: (state: any, action) => {
       state.cart = state.cart.filter((el: any) => el.id !== action.payload);
     },
+
+    toggleCart: (state:any, action)=>{
+      console.log("showCart",state.showCart);
+      
+      state.showCart = !state.showCart
+    },
+    closeCart: (state:any,action)=>{
+      state.showCart = false
+    }
   },
 });
 
-export const { addToCart, removeFromCart, quantityIncrease, quantityDecrease } =
+export const { addToCart, removeFromCart, quantityIncrease, quantityDecrease,toggleCart,closeCart } =
   cartSlice.actions;
 export default cartSlice;

@@ -18,14 +18,23 @@ interface cartItem {
   quantity: number;
 }
 
+interface CartDivD {
+  visible?: string,
+  right?: any,
+  opacity?: number,
+}
+
 const Cart = () => {
-  const { cart } = useSelector((state: any) => state.cart);
+  const { cart,showCart } = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
-  console.log("cart", cart);
+
+  const isVisible: any = showCart ? "block" : "none";
+  const opacity = showCart ? 1 : 0;
+  const right = showCart ? "0" : "-950px";
+  document.body.style.overflow = showCart ? "hidden" : "auto";
 
 
   // delete, incerase, decrese
-
   function deleteIt(id: number) {
     dispatch(removeFromCart(id));
   }
@@ -38,7 +47,6 @@ const Cart = () => {
 
 
   // total price
-
   const TotalPrice = () => {
     let total: any = 0;
     cart.map((e: cartItem) => (total += e?.quantity * e.price));
@@ -46,16 +54,19 @@ const Cart = () => {
   };
 
   return (
-    <CartDiv>
-      <div className="cartTitle text-center text-6xl mt-7 font-['Shantell_Sans']">
+    <CartDiv
+      visible={isVisible}
+      opacity={opacity} right={right}
+    >
+      <div className="cartTitle text-center text-2xl lg:text-6xl mt-7 font-['Shantell_Sans'] underline underline-offset-8">
         <h1>Your Cart</h1>
       </div>
-      <div className="total flex justify-between my-[30px]">
+      <div className="total flex justify-between my-[30px] font-semibold">
         <p>Total :- $ {TotalPrice()}</p>
         <p>Total items :- {cart.length}</p>
       </div>
 
-      {cart.length < 1 && <p>Cart is Empty</p>}
+      {cart.length < 1 && <img className="emptyCart" src="/empty-cart.png" alt="cart" />}
 
       {cart.map((el: cartItem, indx: number) => {
         const { image, price, title, id, quantity } = el;
@@ -95,10 +106,25 @@ const Cart = () => {
 
 export default Cart;
 
-const CartDiv = styled.div`
-  width: 80vw;
-  margin: auto;
+const CartDiv = styled.div<CartDivD>`
+  height: 80vh;
+  max-height: 100vh;
+  font-family: Quicksand;
+  overflow-y: auto;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 40px;
+  backdrop-filter: blur(200px);
+  position: fixed;
+  right: ${({ right }) => right};;
+  width: 50vw;
   margin-bottom:10px;
+  transition: opacity 1s ease-in-out, right .6s ease-in-out;
+
+  /* visibility: ${({ visible }) => visible}; */
+  /* transform: ${({ translate }) => translate}; */
+  /* opacity: ${({ opacity }) => opacity}; */
+
 
   .cardInnerDiv {
     padding: 10px 20px;
@@ -113,6 +139,10 @@ const CartDiv = styled.div`
       width: 300px;
       max-width: 300px;
     }
+  }
+
+  .emptyCart{
+    margin: auto;
   }
 
   .deleteBtn {
@@ -168,6 +198,12 @@ const CartDiv = styled.div`
     color: white;
     border-radius: 7px;
     padding: 5px 15px;
+  }
+
+  @media (max-width: 768px){
+    padding: 10px;
+    width: 100vw;
+
   }
 `;
 
